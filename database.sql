@@ -76,3 +76,21 @@ CREATE TABLE t_factura(
 
 
 
+SELECT FAC.id_factura,
+	   FAC.fecha,
+       FAC.id_usuario,
+       USU.nombre,
+       USU.apellido,
+       FAC.id_cliente,
+       CLI.nombre_cliente,
+       CLI.direccion,
+       FAC.id_producto,
+       PRO.producto,
+       PRO.valor_unitario,
+       FAC.cantidad * PRO.valor_unitario AS total 
+      
+FROM t_factura FAC
+INNER JOIN  t_usuario USU on USU.id_usuario =  FAC.id_usuario
+INNER JOIN  t_cliente CLI on CLI.id_cliente =  FAC.id_cliente
+INNER JOIN  t_producto PRO on PRO.id_producto = FAC.id_producto
+
