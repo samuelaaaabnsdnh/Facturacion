@@ -40,14 +40,39 @@ CREATE TABLE t_producto(
     CONSTRAINT      fk_unidad   FOREIGN KEY(id_unidad) REFERENCES t_unidad(id_unidad)
 )ENGINE=InnoDb;
 
+CREATE TABLE t_rol(
+    id_rol          int(11)     AUTO_INCREMENT NOT NULL,
+    rol             varchar(50),
+    CONSTRAINT      pk_rol      PRIMARY KEY(id_rol)   
+)ENGINE=InnoDb;
+
+CREATE TABLE t_usuario(
+    id_usuario      int(11)     AUTO_INCREMENT  NOT NULL,
+    nombre          varchar(100),
+    apellido        varchar(100),
+    correo          varchar(100),
+    password        varchar(100),
+    id_rol          int(11),
+    CONSTRAINT      pk_usuario    PRIMARY KEY(id_usuario),
+    CONSTRAINT      fk_rol        FOREIGN KEY(id_rol)   REFERENCES t_rol(id_rol)   
+)ENGINE=InnoDb;
+
+
+
 CREATE TABLE t_factura(
     id_factura      int(11)     AUTO_INCREMENT  NOT NULL,
     fecha           DATE,
     id_cliente      int(11),
     id_producto     int(11),
+    id_usuario      int(11),
     cantidad        varchar(100),
     valor_unitario  float(10,2),
+    total           float(10.2),
     CONSTRAINT      pk_factura    PRIMARY KEY(id_factura) ,
     CONSTRAINT      fk_cliente    FOREIGN KEY(id_cliente) REFERENCES t_cliente(id_cliente),
-    CONSTRAINT      fk_producto   FOREIGN KEY(id_producto) REFERENCES t_producto(id_producto)  
-)ENGINE=InnoDb
+    CONSTRAINT      fk_producto   FOREIGN KEY(id_producto) REFERENCES t_producto(id_producto),
+    CONSTRAINT      fk_usuario    FOREIGN KEY(id_usuario) REFERENCES t_usuario(id_usuario)  
+)ENGINE=InnoDb;
+
+
+
